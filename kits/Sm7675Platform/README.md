@@ -8,3 +8,19 @@ Board votes and firmware selection remain in the device repository.
 The OEM DT declares one nonsecure user route, SID 0. The sheng-only second
 route is not leased on uke; secure SID 2 is not attached to an ordinary process VM. GMU uses SID 5. The OEM GPU ACTLR policy is 0x32b.
 These are source inputs; the iPadOS 27 integration awaits device qualification.
+
+## LLCC v5.0 GPU cache operations
+
+`Sm7675Llcc.h` supplies bounded LLCC attribute validation, inactive blank-slice
+initialization, activation and A7xx GBIF SCID routing. The caller supplies the
+board's two slice IDs/capacities, MMIO callbacks and serialization with the GPU
+stopped. Unknown policies and inconsistent banks are refused before writes.
+Only the supplied slices' policy bits change; other clients retain their words.
+Routing is programmed after per-bank activation/readback and restored if route
+verification fails. There is no global flush or slice deactivation.
+
+The uke board selects cliffs7 GPU9/3200KiB and GPUHTW11/256KiB, using its OEM
+LLCC v50 register layout. Host MMIO fault checks pass. Uke CRC0394BE262DDF45AF readback proves
+four-bank activation and GBIF routing from an initially blank/inactive state;
+three restart readbacks preserve both. This accepts activation/routing only;
+coherency stress, pixel checks and controlled frame-time gains remain unverified.
