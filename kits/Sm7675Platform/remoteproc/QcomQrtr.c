@@ -18,11 +18,14 @@ void qcom_qrtr_init(QcomQrtr *q, uint32_t local_node, QcomQrtrSend send, void *s
     q->send_context = send_context;
 }
 
-static int emit(QcomQrtr *q, uint32_t type, uint32_t from_port, uint32_t node, uint32_t port, const uint8_t *data, uint32_t length)
+static int emit_buffered(QcomQrtr *q, uint32_t type, uint32_t from_port, uint32_t node, uint32_t port,
+                         const uint8_t *data, uint32_t length, uint8_t *packet, uint32_t capacity)
 {
-    uint8_t packet[MAX_PACKET];
+    if (capacity < QCOM_QRTR_HEADER || length > capacity - QCOM_QRTR_HEADER ||
+        length > UINT32_MAX - 3 || (!data && length) || !packet)
+        return -1;
     const uint32_t padded = (length + 3) & ~3u;
-    if (QCOM_QRTR_HEADER + padded > sizeof packet) return -1;
+    if (padded > capacity - QCOM_QRTR_HEADER) return -1;
     put32(packet, 1);
     put32(packet + 4, type);
     put32(packet + 8, q->local_node);
@@ -35,6 +38,13 @@ static int emit(QcomQrtr *q, uint32_t type, uint32_t from_port, uint32_t node, u
     if (q->send(q->send_context, packet, QCOM_QRTR_HEADER + padded)) {q->tx_refused++; return -1;}
     q->tx_packets++;
     return 0;
+}
+
+static int emit(QcomQrtr *q, uint32_t type, uint32_t from_port, uint32_t node, uint32_t port,
+                const uint8_t *data, uint32_t length)
+{
+    uint8_t packet[MAX_PACKET];
+    return emit_buffered(q, type, from_port, node, port, data, length, packet, sizeof packet);
 }
 
 static int control(QcomQrtr *q, uint32_t command, const uint32_t words[4])
@@ -143,6 +153,12 @@ int qcom_qrtr_receive(QcomQrtr *q, const uint8_t *packet, uint32_t length)
 int qcom_qrtr_send_data(QcomQrtr *q, uint32_t from_port, uint32_t node, uint32_t port, const uint8_t *data, uint32_t length)
 {
     return emit(q, QCOM_QRTR_DATA, from_port, node, port, data, length);
+}
+
+int qcom_qrtr_send_data_buffered(QcomQrtr *q, uint32_t from_port, uint32_t node, uint32_t port,
+                                const uint8_t *data, uint32_t length, uint8_t *packet, uint32_t capacity)
+{
+    return emit_buffered(q, QCOM_QRTR_DATA, from_port, node, port, data, length, packet, capacity);
 }
 
 /* ---- QMI ---- */

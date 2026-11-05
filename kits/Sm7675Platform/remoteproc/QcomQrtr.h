@@ -54,6 +54,9 @@ void qcom_qrtr_start(QcomQrtr *q);
 int qcom_qrtr_receive(QcomQrtr *q, const uint8_t *packet, uint32_t length);
 /* A data packet from our port to the remote's node:port. capacity bounds the packet built on the stack. Returns 0 when queued. */
 int qcom_qrtr_send_data(QcomQrtr *q, uint32_t from_port, uint32_t node, uint32_t port, const uint8_t *data, uint32_t length);
+/* Packet workspace must be disjoint from data. The transport copies it before returning. */
+int qcom_qrtr_send_data_buffered(QcomQrtr *q, uint32_t from_port, uint32_t node, uint32_t port,
+                                const uint8_t *data, uint32_t length, uint8_t *packet, uint32_t capacity);
 /* Index of a remote service in the list, -1 when not announced. */
 int qcom_qrtr_find_remote(const QcomQrtr *q, uint32_t service);
 

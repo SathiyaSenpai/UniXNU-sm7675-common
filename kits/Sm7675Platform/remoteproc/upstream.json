@@ -23,13 +23,13 @@
   "local_adaptations": {
     "QcomQrtr.c": {
       "input_sha256": "d22ff8572b93424f1f03138204a44e10b444d0cb62b6be4f1c57b7d3b2ddbc74",
-      "output_sha256": "48223756c53c2fe923ae09b722bc3e6f1b60e37ff99d5a88a0e374b63778af8d",
-      "purpose": "Bind an unannounced QRTR client port for original ath11k read-only identity queries; existing service behavior preserved."
+      "output_sha256": "fa7957fa34e3fcc65c4f6a9d9e19a0e76c5cded3dbbbf6da3f2ae3a2e8c91f2f",
+      "purpose": "Bind unannounced client ports and provide caller-owned transmit workspace for ath11k BDF segments."
     },
     "QcomQrtr.h": {
       "input_sha256": "3ead40f5f996497224ebef92e2e67820aa8372bab0a21646c15df954baba84f1",
-      "output_sha256": "56403f4b0bea040359fda5fd37915a057aecff2dfc3005d5989aec890b41dd4e",
-      "purpose": "Bind an unannounced QRTR client port for original ath11k read-only identity queries; existing service behavior preserved."
+      "output_sha256": "3cc5ce2d414ed18d006e38523e2647b01ce3ee5083da02f5ee74fd5556483114",
+      "purpose": "Bind unannounced client ports and provide caller-owned transmit workspace for ath11k BDF segments."
     }
   }
 }
