@@ -19,5 +19,17 @@
     "FatVolume.c": "6e00c31149c4d52733bce0eea360e2db3647c32f01f14ae7c4550ac641f62779",
     "FatVolume.h": "a438bcc5519bacfbfa6b6c55646fe4a3f7787f37a50c52103d8094c6871b67e7",
     "QcomScm.h": "ab03ab1291f043cb281f4d64b82b0d497d0e4f61a5b888512f0ec852ae1a3244"
+  },
+  "local_adaptations": {
+    "QcomQrtr.c": {
+      "input_sha256": "d22ff8572b93424f1f03138204a44e10b444d0cb62b6be4f1c57b7d3b2ddbc74",
+      "output_sha256": "48223756c53c2fe923ae09b722bc3e6f1b60e37ff99d5a88a0e374b63778af8d",
+      "purpose": "Bind an unannounced QRTR client port for original ath11k read-only identity queries; existing service behavior preserved."
+    },
+    "QcomQrtr.h": {
+      "input_sha256": "3ead40f5f996497224ebef92e2e67820aa8372bab0a21646c15df954baba84f1",
+      "output_sha256": "56403f4b0bea040359fda5fd37915a057aecff2dfc3005d5989aec890b41dd4e",
+      "purpose": "Bind an unannounced QRTR client port for original ath11k read-only identity queries; existing service behavior preserved."
+    }
   }
 }
