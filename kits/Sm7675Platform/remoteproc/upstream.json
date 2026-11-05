@@ -1,0 +1,23 @@
+{
+  "repository": "https://github.com/UniXNU/UniXNU-sheng",
+  "revision": "460179565a018c741b93e0b1efa07c55d4de497a",
+  "files": {
+    "QcomMdt.c": "706f4a86624d119282683287bf408ae679275368f9bcc28d6f4ba652d3ad377a",
+    "QcomMdt.h": "22d8e567b285e254becf1af41f8ba0c9c1cfcc5295f6246b4b9d09e5fef88477",
+    "QcomSmem.c": "4e9eb0ee22458dad30e1fcb7edb74a9d762222aff0623a6d5b85fb4a6e08bd03",
+    "QcomSmem.h": "f2a25e807bfa0556f2ec19258d8b2f47782acdc5fe1d9bdab23ecbb9f948ae37",
+    "QcomSmp2p.c": "f91c38e60fe86c5a55cbf9e822e0486997f7104d564ea90d6afe6ab40ac9d60b",
+    "QcomSmp2p.h": "894f36fd14be184252ce64c4c8c908d161d31433185b190041f4bd18d47d68c6",
+    "QcomGlink.c": "3d7e18c2cae2c6136b1b7bf43f8d69e49c99ed8e60d3ee7cd98c37891df9b1ba",
+    "QcomGlink.h": "7e617c764e11ba7ca08e9976e39c35710515a16613ea66f3e845da538ad2df07",
+    "QcomQmp.c": "6d5dd2e0ebf1f425f7fc929555edb275b8d499cfaa1f9c887bfcb68f09785249",
+    "QcomQmp.h": "dd6722ade248435930c5f242ef78728f58f7e3bc6a9765fe229b32c87f342503",
+    "QcomRpmh.c": "679a55467e6ed4c7e75a8191f1d6da48637377088ef5e27879b1c99bc4a62314",
+    "QcomRpmh.h": "47e299744ff83989449d262f74f5dfd2ba1cdbf921b2886643735f2febb6ee21",
+    "QcomQrtr.c": "d22ff8572b93424f1f03138204a44e10b444d0cb62b6be4f1c57b7d3b2ddbc74",
+    "QcomQrtr.h": "3ead40f5f996497224ebef92e2e67820aa8372bab0a21646c15df954baba84f1",
+    "FatVolume.c": "6e00c31149c4d52733bce0eea360e2db3647c32f01f14ae7c4550ac641f62779",
+    "FatVolume.h": "a438bcc5519bacfbfa6b6c55646fe4a3f7787f37a50c52103d8094c6871b67e7",
+    "QcomScm.h": "ab03ab1291f043cb281f4d64b82b0d497d0e4f61a5b888512f0ec852ae1a3244"
+  }
+}

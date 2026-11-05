@@ -1,5 +1,15 @@
 # SM7675 GPU platform operations
 
+## Remote-processor protocol cores
+
+`remoteproc/` imports the unchanged MDT, SMEM, SMP2P, GLINK, QMP, RPMh,
+QRTR and read-only FAT implementations from UniXNU-sheng
+`460179565a018c741b93e0b1efa07c55d4de497a`. `upstream.json` records every
+file hash. Uke's WCN6750 board worker owns the WPSS addresses, firmware,
+PAS identity, interrupts and power policy. Importing these cores does not
+change existing GMU, SMMU or LLCC operations and does not establish hardware
+acceptance of WPSS or Wi-Fi.
+
 The ShengGmu and ShengGpuSmmu interfaces are imported from UniXNU-sm8550-common
 main a9f45dc60c035084b95463781538380f4c3606c9. Runtime symbols and source names
 are preserved. Generated uke headers supply gen7_11_0 windows, firmware and votes.
