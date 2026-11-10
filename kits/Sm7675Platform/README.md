@@ -51,3 +51,22 @@ CX/MX、LCX/LMX 名称及等级由设备代码从 cmd-db 查询。调用者须�
 覆盖两种 RSC 布局、混合门铃、并发 QMP、超时及投票撤销。运行设备仓的
 `python3 scripts/check-uke-dsp-host.py --soc ../UniXNU-sm7675-common`。
 主机测试不能证明 ADSP 与 WPSS 已在硬件共存。
+
+### SCM WAITQ（2026-11-11）
+
+`remoteproc/Sm7675Scm.cpp` 适配 uke OEM 内核
+`5712080a4b0c0b1a879e6d145c601c649ddaddfd` 的
+`drivers/firmware/qcom_scm-smc.c`、`qcom_scm.c`，沿用其
+GPL-2.0-only 许可证及版权标注。其余已有协议核心的许可证不变。
+ADSP 与 WPSS 的非原子 PAS 调用共用 mutex；处理 QCOM_A6 interrupted、
+WAITQ_SLEEP/WAKE、RESUME/ACK 及 EBUSY 的原请求重试。原子 GET_WQ_CTX
+由中断工作线程执行，不持有普通 PAS 调用锁。查询固件返回的 intid 后
+注册边沿中断；uke 原厂恢复系统实测 contexts=2、GIC intid=962。
+
+XNU 适配以 completion token 和当前等待者 generation 表达 upstream 的
+wake_one 和 wake_all/reinit。区别是等待有10秒上限：丢失唤醒或协议异常
+后关闭后续调用；PAS 使用者必须保留安全世界可能持有的元数据和资源，
+直到干净重启，不能将未完成认证当作可直接free的终结失败。
+`tests/scm_host.cpp` 执行实际生产代码，脚本化SMC回复，覆盖IRQ唤醒、
+ACK/RESUME、A6、忙重试、畸形回复、超时隔离及并发串行。主机测试不证明
+实机中断投递或PAS成功。
