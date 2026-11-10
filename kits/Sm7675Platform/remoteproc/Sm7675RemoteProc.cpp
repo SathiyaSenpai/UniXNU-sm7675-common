@@ -90,6 +90,7 @@ void ipccIrq(void *)
 
 void rscIrq(void *)
 {
+    if (!__atomic_load_n(&gRscOwned, __ATOMIC_ACQUIRE)) return;
     if (!(read(gRsc, kRscOffset + gRscLayout.irq_status) & kTcsBit)) return;
     __atomic_store_n(&gRscComplete, 1u, __ATOMIC_RELEASE);
     write(gRsc, kRscOffset + gRscLayout.irq_clear, kTcsBit);
@@ -147,7 +148,7 @@ int applyVotes(const Sm7675RpmhVote *old, const Sm7675RpmhVote *next, const Sm76
     if (gRscUncertain || (read(gRsc, control) & (1u << 24))) return EBUSY;
     if (!gRscOwned) {
         write(gRsc, kRscOffset, read(gRsc, kRscOffset) | kTcsBit);
-        gRscOwned = true;
+        __atomic_store_n(&gRscOwned, true, __ATOMIC_RELEASE);
     }
     QcomRpmhWrite writes[20];
     const unsigned n = qcom_rpmh_active_request(&gRscLayout, kTcs, addresses, values, changed, writes, 20);

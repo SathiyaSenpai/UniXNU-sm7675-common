@@ -133,6 +133,15 @@ int main(int argc, char **) {
 
     Sm7675RpmhVote w[] = {{0x30000, 3}, {0x30004, 4}, {0x30008, 3}};
     Sm7675RpmhVote a[] = {{0x30000, 6}, {0x3000c, 5}};
+    const auto layout = qcom_rsc_layout(rsc[0]);
+    const unsigned control = (0xd00 + layout.tcs_stride + layout.control) / 4;
+    rsc[control] = 1u << 24;
+    CHECK(sm7675_remote_vote(Sm7675Remote::Wpss, w, 3) == EBUSY);
+    rsc[(0xd00 + layout.irq_status) / 4] = 2;
+    handlers[37](nullptr);
+    CHECK(rsc[(0xd00 + layout.irq_status) / 4] == 2);
+    rsc[control] = 0;
+    rsc[(0xd00 + layout.irq_status) / 4] = 0;
     CHECK(!sm7675_remote_vote(Sm7675Remote::Wpss, w, 3));
     CHECK(attachments[37] == 1 && votes.size() == 3);
     CHECK(!sm7675_remote_vote(Sm7675Remote::Adsp, a, 2));
