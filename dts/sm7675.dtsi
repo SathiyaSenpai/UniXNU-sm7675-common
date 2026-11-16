@@ -29,15 +29,17 @@
         };
 
         gpu: gpu@3d00000 {
-            compatible = "qcom,adreno-gpu-gen7-11-0", "qcom,kgsl-3d0";
-            reg = <0 0x3d00000 0 0x40000>;
+            compatible = "qcom,adreno", "qcom,adreno-gpu-gen7-11-0", "qcom,kgsl-3d0";
+            reg = <0 0x3d00000 0 0x40000>, <0 0x3d9e000 0 0x1000>;
+            reg-names = "kgsl_3d0_reg_memory", "cx_misc";
+            iommus = <&gpu_smmu 0 0>, <&gpu_smmu 2 0>, <&gpu_smmu 5 0>;
             status = "disabled";
         };
 
         gmu: gmu@3d68000 {
-            compatible = "qcom,gen7-gmu";
-            reg = <0 0x3d68000 0 0x37000>, <0 0xb280000 0 0x10000>;
-            reg-names = "gmu", "gmu_pdc";
+            compatible = "qcom,adreno-gmu", "qcom,gen7-gmu";
+            reg = <0 0x3d68000 0 0x37000>, <0 0x3d50000 0 0x10000>, <0 0xb280000 0 0x10000>;
+            reg-names = "gmu", "rscc", "gmu_pdc";
             status = "disabled";
         };
 
